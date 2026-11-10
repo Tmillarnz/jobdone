@@ -4,6 +4,7 @@ import type { Job, Line, Trade } from './types';
 export const testTrade: Trade = {
   id: 'test',
   name: 'Test trade',
+  rateSetNoun: 'Mix',
   areaKinds: [
     {
       id: 'slab',

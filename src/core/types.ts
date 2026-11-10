@@ -115,14 +115,21 @@ export interface FieldDef {
   group?: string;
   /** Field is shown only when another field has one of these values. */
   showIf?: { key: string; in: FieldValue[] };
+  /** Extra spoken words that mean this field, for Talk. The label always counts. */
+  say?: string[];
 }
 
 export interface AreaKind {
   id: string;
   name: string;
   fields: FieldDef[];
-  /** Field keys the Draw method fills from a plan (area, perimeter). */
-  plan?: { areaField?: string; perimeterField?: string };
+  /**
+   * Present when the kind can be drawn. Draw writes the union area and outline
+   * perimeter into these fields, plus any fixed values in `set`.
+   */
+  plan?: { areaField?: string; perimeterField?: string; set?: Record<string, FieldValue> };
+  /** Field keys filled in order by a spoken "4 by 3.6 by 2.4". */
+  spokenDims?: string[];
 }
 
 export interface TakeoffLine {
@@ -153,6 +160,8 @@ export interface RateKeyDef {
 export interface Trade {
   id: string;
   name: string;
+  /** What this trade calls a rate set, e.g. "Coating" or "Roof system". */
+  rateSetNoun: string;
   areaKinds: AreaKind[];
   /** Every rate key the takeoff can emit, for the rate set editor. */
   rateKeys: RateKeyDef[];
