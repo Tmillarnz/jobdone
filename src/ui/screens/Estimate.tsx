@@ -1,16 +1,17 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { uid } from '../../core/id';
 import { extraAmount, formatMoney, lineAmount, needsRate, roundQty, totals, unitLabel } from '../../core/money';
-import { gstNumberMissing } from '../../core/quote';
+import { confirmQuote, dayKey, formatQuoteNumber, gstNumberMissing } from '../../core/quote';
 import { regenerateJob } from '../../core/regenerate';
 import type { Extra, Job, Line, Unit } from '../../core/types';
-import { useApp } from '../app';
+import { nav, useApp } from '../app';
+import { Document } from '../Document';
 import { MoneyInput, Missing, NumberInput, Screen, useJob } from '../components';
 
 const UNITS: Unit[] = ['each', 'm2', 'lm', 'hr'];
 
 export function Estimate({ id }: { id: string }) {
-  const { settings, tradeOf } = useApp();
+  const { db, settings, tradeOf } = useApp();
   const { job, save } = useJob(id);
   const trade = job ? tradeOf(job.tradeId) : undefined;
   const regenerated = useRef(false);
@@ -41,6 +42,19 @@ export function Estimate({ id }: { id: string }) {
       lines: [...job.lines, { id: uid(), source: 'manual', key: `manual:${uid()}`, label: '', qty: 1, unit: 'each', rateCents: 0, edited: false }],
     });
 
+  const confirmIt = async () => {
+    const ask =
+      unset > 0
+        ? `${unset === 1 ? '1 line has' : `${unset} lines have`} no rate and will be on the quote at $0.00. Confirm anyway?`
+        : 'Confirm this as a quote? The quote is fixed once confirmed. You can still change the job and confirm a new one.';
+    if (!confirm(ask)) return;
+    const now = new Date();
+    const number = formatQuoteNumber(now, await db.nextQuoteSeq(dayKey(now)));
+    const quote = confirmQuote(job, settings, number, now);
+    await db.saveQuote(quote);
+    nav(`/quote/${quote.id}`);
+  };
+
   const sets = settings.rateSets.filter((r) => r.tradeId === trade.id);
   const t = totals(job.lines, job.extras, settings.chargeGst);
   const unset = job.lines.filter(needsRate).length;
@@ -48,6 +62,11 @@ export function Estimate({ id }: { id: string }) {
 
   return (
     <Screen title="Estimate" sub={job.siteName} back={`/job/${job.id}/check`}>
+      <Document
+        printOnly
+        doc={{ label: 'Estimate', date: job.updatedAt, siteName: job.siteName, lines: job.lines, extras: job.extras, chargeGst: settings.chargeGst, gstNumber: settings.gstNumber }}
+      />
+      <div class="no-print">
       <p class="banner">Estimate only, not an offer.</p>
 
       {sets.length > 1 && (
@@ -168,6 +187,15 @@ export function Estimate({ id }: { id: string }) {
           GST is being charged but there is no GST number to print. <a href="#/settings">Add it in Settings.</a>
         </p>
       )}
+      <div class="actions sticky">
+        <button class="btn" onClick={() => window.print()}>
+          Print estimate
+        </button>
+        <button class="btn primary" disabled={job.lines.length + job.extras.length === 0} onClick={() => void confirmIt()}>
+          Confirm quote
+        </button>
+      </div>
+      </div>
     </Screen>
   );
 }

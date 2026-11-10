@@ -180,3 +180,39 @@ details.rates[open] > summary { margin-bottom: 12px; }
 .rate label { margin: 0; font-weight: 500; }
 
 .print-only { display: none; }
+
+.status { min-height: 1.5em; color: var(--muted); margin-top: 8px; }
+
+/* The paper layout. On screen it sits on a white sheet; in print it is the page. */
+.doc { background: #fff; color: #000; border: 1px solid var(--line); border-radius: 4px; padding: 20px 16px; margin: 12px 0; font-size: 0.95rem; }
+.doc p { margin: 0; }
+.doc-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 2px solid #000; padding-bottom: 12px; }
+.doc-business { font-size: 1.3rem; font-weight: 800; }
+.doc-id { text-align: right; margin-left: auto; }
+.doc-label { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.doc-site { margin: 14px 0 !important; }
+.doc-note { font-weight: 700; margin-bottom: 12px !important; }
+.doc-table { width: 100%; border-collapse: collapse; }
+.doc-table th, .doc-table td { text-align: left; padding: 6px 4px; border-bottom: 1px solid #c9c9c9; vertical-align: top; }
+.doc-table .n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.doc-table thead th { border-bottom: 1.5px solid #000; font-size: 0.85rem; }
+.doc-table .doc-sub th { padding-top: 14px; border-bottom: 1.5px solid #000; }
+.doc-table tfoot td { border-bottom: 0; }
+.doc-table tfoot tr:first-child td { padding-top: 12px; }
+.doc-table tfoot .grand td { font-weight: 800; font-size: 1.1rem; border-top: 2px solid #000; }
+.doc-terms { margin-top: 20px; }
+.doc-terms h2 { font-size: 1rem; margin: 0 0 4px; }
+.doc-terms p { white-space: pre-wrap; }
+.doc-bank { margin-top: 14px !important; font-weight: 700; }
+@media (max-width: 420px) { .doc { font-size: 0.82rem; padding: 16px 10px; } }
+
+@page { margin: 15mm; }
+@media print {
+  html, body { background: #fff; }
+  body { font-size: 11pt; }
+  .no-print, .bar { display: none !important; }
+  .print-only { display: block; }
+  .screen { max-width: none; padding: 0; }
+  .doc { border: 0; border-radius: 0; padding: 0; margin: 0; }
+  .doc-table tr, .doc-terms { break-inside: avoid; }
+}
