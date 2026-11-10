@@ -41,3 +41,17 @@
 - Talk asks for `en-NZ` recognition.
 - Photos are shrunk to 1600 px on the long edge (JPEG) before being stored, to keep the device from filling up.
 - Photos attach to the job, not to an area.
+
+## Phase 5: Plumber, Roofer, Builder
+
+- None of these trades has rates in v1, so every rate ships unset and shows "set rate" (brief section 10, item 7).
+- Plumber: each fixture is its own entry (fixture, point type, how many), and pipe runs are a second kind of entry. Name the entry after where it is, for example "Bathroom".
+- Plumber: grade (standard or specified) is offered on washing machine, dishwasher and hot water cylinder. It shows on the line and does not change the rate key, which stays `fixture.pointType` as the brief says.
+- Plumber and Builder ship one rate set each, "Standard". More can be added in Settings.
+- Roofer: the pitch has no default. Until a pitch is chosen (or a factor typed) there is no roofing line, and Check says "set the pitch". Flat (0°) is a real choice. This avoids quietly pricing a pitched roof as flat.
+- Roofer: pitch choices are 0, 3, 5, 8, 10, 12, 15, 18, 20, 22.5, 25, 27.5, 30, 35, 40, 45, 50 and 60 degrees. Any other pitch is entered as a typed factor.
+- Roofer: flashings can be entered by length, each, or both. Ridge, hip, valley, barge, gutters, flashings and downpipes sit on the roof plane they belong to.
+- Builder: work items are tick boxes on the room or elevation. A ticked item makes a line starting at the matching measured figure; change the quantity on the Estimate and it is kept as an edited line.
+- Builder room items: wall lining (wall m²), ceiling lining (ceiling m²), decking (floor m²), framing (perimeter), trim (perimeter). Both lining items use the one lining rate. Elevation items: cladding (gross m²), lining (gross m²), framing (width). Labour is typed hours on either.
+- Builder: door and window counts make "each" lines priced on door and window rates.
+- Builder suggested extras (the brief gives none): Materials, Variation, Scaffold, Rubbish removal, Travel.
