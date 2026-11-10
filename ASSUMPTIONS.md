@@ -29,3 +29,15 @@
 - A job can be confirmed more than once. Each confirm is a new quote with its own number; earlier quotes are kept.
 - Deleting a job keeps its confirmed quotes.
 - Print layout is new (v1's was not used): business details top left, label, number and date top right, site, a four-column table, totals, terms.
+
+## Phase 4: Draw, Talk, photos
+
+- Draw writes the plan's union area and outline perimeter (2 decimals) into the area's own fields and keeps the rectangles on `Area.plan`. The numbers stay editable afterwards; if they are retyped, the typed numbers price the job and the saved picture is not redrawn.
+- Draw snaps to a 50 mm grid and to nearby edges of other rectangles. A typed length is taken exactly, to the millimetre.
+- If drawn rectangles do not all touch, Draw warns and counts each piece.
+- The outline perimeter includes the edge of any enclosed hole.
+- Talk understands "4 by 3.6 by 2.4", "length 4", "4 long", "two doors" and a named flag ("ranch slider"). It reads number and yes/no fields only; choices such as wallpaper are typed. Anything not heard is listed and left for typing.
+- Talk uses the browser's Web Speech API, as the brief specifies. On most phones the browser sends the audio to its own speech service, so Talk needs a connection even though the rest of the app does not. The app itself makes no network calls. Where the API is missing, the Talk panel is not shown.
+- Talk asks for `en-NZ` recognition.
+- Photos are shrunk to 1600 px on the long edge (JPEG) before being stored, to keep the device from filling up.
+- Photos attach to the job, not to an area.
