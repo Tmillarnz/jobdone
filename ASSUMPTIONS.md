@@ -55,3 +55,19 @@
 - Builder room items: wall lining (wall m²), ceiling lining (ceiling m²), decking (floor m²), framing (perimeter), trim (perimeter). Both lining items use the one lining rate. Elevation items: cladding (gross m²), lining (gross m²), framing (width). Labour is typed hours on either.
 - Builder: door and window counts make "each" lines priced on door and window rates.
 - Builder suggested extras (the brief gives none): Materials, Variation, Scaffold, Rubbish removal, Travel.
+
+## Phase 6: PWA and How to
+
+- The service worker precaches every built file on first load and updates itself when a new build is published. Nothing is fetched at runtime.
+- "Add to Home Screen" appears as a button on How to when the browser offers its install prompt (Chrome, Edge). Safari on iPhone has no such prompt, so How to gives the Share steps.
+- The app icon is a plain placeholder mark (a "U" on charcoal). Replace `public/icon.svg` and the PNGs beside it with the real logo.
+- The app name is UteDesk and quote numbers start `UD-`, as the brief specifies, although the repo is `jobdone`.
+- `enabledTrades` lives in `src/config.ts`.
+- Hosting and deployment are not configured, as instructed. `npm run build` writes the static site to `dist/`. A PWA needs to be served over HTTPS to install and work offline.
+- There is no backup or export (out of scope in the brief). How to tells the operator that clearing site data deletes their work.
+
+## Not verified on a real device
+
+- Talk was tested through its parser only. The test browser has no speech recognition, so the microphone flow has not been exercised on a phone.
+- Draw was tested with a mouse in a phone-sized browser, not with a finger on glass.
+- Install and offline were tested in desktop Chromium, not on iOS Safari.

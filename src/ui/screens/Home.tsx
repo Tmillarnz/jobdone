@@ -7,6 +7,7 @@ export const homeLinks: { label: string; hint: string; to: string; primary?: boo
   { label: 'List jobs', hint: 'Open a job on this device', to: '/jobs' },
   { label: 'Sent quotes', hint: 'Confirmed quotes and what has gone out', to: '/quotes' },
   { label: 'Settings', hint: 'Business details, GST, rates', to: '/settings' },
+  { label: 'How to', hint: 'Using the app, and adding it to your home screen', to: '/howto' },
 ];
 
 export function Home() {

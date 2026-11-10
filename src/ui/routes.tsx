@@ -2,6 +2,7 @@ import type { ComponentChildren } from 'preact';
 import { AreaEditor } from './screens/AreaEditor';
 import { Check } from './screens/Check';
 import { Estimate } from './screens/Estimate';
+import { HowTo } from './screens/HowTo';
 import { Home } from './screens/Home';
 import { JobScreen } from './screens/JobScreen';
 import { Jobs } from './screens/Jobs';
@@ -21,5 +22,6 @@ export const routes: { pattern: string; render(p: P): ComponentChildren }[] = [
   { pattern: '/job/:id/estimate', render: (p) => <Estimate key={p.id} id={p.id!} /> },
   { pattern: '/quotes', render: () => <Quotes /> },
   { pattern: '/quote/:id', render: (p) => <QuoteScreen key={p.id} id={p.id!} /> },
+  { pattern: '/howto', render: () => <HowTo /> },
   { pattern: '/settings', render: () => <SettingsScreen /> },
 ];
